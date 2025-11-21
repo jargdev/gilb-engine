@@ -13,17 +13,14 @@ EXT_LIBS := -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 all: $(TARGET)
 
-# Link target
 $(TARGET): $(ASSET_HEADERS) $(OBJ)
 	@mkdir -p $(dir $@)
 	$(CXX) $(OBJ) -o $(TARGET) $(SDL_CFLAGS) $(SDL_LDFLAGS) $(EXT_LIBS)
 
-# Object build rule
 build/src/%.o: src/%.cpp $(ASSET_HEADERS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(SDL_CFLAGS) -Isrc -Ibuild -Ibuild/assets -c $< -o $@
 
-# Convert assets to headers
 build/assets/%.h: src/assets/%
 	@mkdir -p $(dir $@)
 	name=$$(basename $< | tr . _); \
